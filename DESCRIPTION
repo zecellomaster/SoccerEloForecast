@@ -1,5 +1,5 @@
 Package: SoccerEloForecast
-Title: "Elo Based Anaylsis Package"
+Title: "Elo Based Forecast/Anaylsis Package"
 Version: 0.0.1.0000
 Authors@R: 
     person(given = "zecellomaster",
