@@ -2,8 +2,8 @@
 % Please edit documentation in R/gameprediction.R
 \name{gameprediction}
 \alias{gameprediction}
-\title{Simulates match results or calculates an array of win\%/loss\%/draw\%
-of the higher Elo team (Team A) depending on what the user wants}
+\title{Returns simulated match results or a list of the \% chance of a win/loss/draw
+of the higher Elo team (Team A).}
 \usage{
 gameprediction(function_mode = "chances", elos, home, prev_matches)
 }
@@ -11,19 +11,19 @@ gameprediction(function_mode = "chances", elos, home, prev_matches)
 \item{function_mode}{String or int; which mode should the function run: "chances"
 or the number of matches to be simulated (Default = "chances": 15,000 simulations)}
 
-\item{elos}{List; current Elo ratings of Teams A and B respectively}
+\item{elos}{vector; current Elo ratings of Teams A and B respectively}
 
-\item{home}{List of booleans; Whether or not either team is at home}
+\item{home}{vector of booleans; Whether or not either team is at home}
 
 \item{prev_matches}{List of Dataframe; contains previous matches, Elo ratings,
 and (if available) match weights of Teams A and B respectively.
-Dataframe columns: team_elo, opp_elo, team_score, opp_score, team_home, team_away,
+Dataframe columns: team_elo, opp_elo, team_score, opp_score, team_home, opp_home,
 match_weight}
 }
 \value{
 Win\%/Draw\%/Loss\% of Team A or Simulated Match Results
 }
 \description{
-Simulates match results or calculates an array of win\%/loss\%/draw\%
-of the higher Elo team (Team A) depending on what the user wants
+Returns simulated match results or a list of the \% chance of a win/loss/draw
+of the higher Elo team (Team A).
 }

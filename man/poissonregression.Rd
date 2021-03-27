@@ -5,21 +5,25 @@
 \title{Calculates the Poisson regressions of two teams using prior match results and
 Elo data.}
 \usage{
-poissonregression(elos, home, prev_matches)
+poissonregression(elos, home, prev_matches, type = F)
 }
 \arguments{
 \item{elos}{List; current Elo ratings of Teams A and B respectively. Team A
 is in the first index and has the higher rating}
 
-\item{home}{2 item List of booleans; Whether or not either team is at home}
+\item{home}{2 item vector of booleans; Whether or not either team is at home}
 
-\item{prev_matches}{List of Dataframe; contains previous matches, Elo ratings,
+\item{prev_matches}{List of dataframes; contains previous matches, Elo ratings,
 and (if available) match weights of Teams A and B respectively.
-Dataframe columns: team_elo, opp_elo, team_score, opp_score, team_home, team_away,
+Dataframe columns: team_elo, opp_elo, team_score, opp_score, team_home, opp_home,
 weight}
+
+\item{type}{"nested" or "indep": The type of Poisson regression to be used,
+nested  or independent. If empty, the function will choose the best type
+depending on the circumstances.}
 }
 \value{
-regressions, state, adjust_weight (if Team B # of matches < 25)
+state;regressions, adjust_weight (if Team B # of matches < 25)
 }
 \description{
 Calculates the Poisson regressions of two teams using prior match results and

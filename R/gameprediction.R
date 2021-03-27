@@ -1,21 +1,21 @@
 #Name: gameprediction.R
 #Author: zecellomaster
 #Date: 03/17/21 (v1.0)
-#' Simulates match results or calculates an array of win%/loss%/draw%
-#' of the higher Elo team (Team A) depending on what the user wants
+#' Returns simulated match results or a list of the % chance of a win/loss/draw
+#' of the higher Elo team (Team A).
 #'
 #' @import stats
 #'
 #' @param function_mode String or int; which mode should the function run: "chances"
 #' or the number of matches to be simulated (Default = "chances": 15,000 simulations)
 #'
-#' @param elos List; current Elo ratings of Teams A and B respectively
+#' @param elos vector; current Elo ratings of Teams A and B respectively
 #'
-#' @param home List of booleans; Whether or not either team is at home
+#' @param home vector of booleans; Whether or not either team is at home
 #'
 #' @param prev_matches List of Dataframe; contains previous matches, Elo ratings,
 #' and (if available) match weights of Teams A and B respectively.
-#' Dataframe columns: team_elo, opp_elo, team_score, opp_score, team_home, team_away,
+#' Dataframe columns: team_elo, opp_elo, team_score, opp_score, team_home, opp_home,
 #' match_weight
 #'
 #' @return Win%/Draw%/Loss% of Team A or Simulated Match Results

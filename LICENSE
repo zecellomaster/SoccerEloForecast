@@ -1,19 +1,6 @@
-Based on <http://opensource.org/licenses/MIT>
+MIT License
 
-This is a template.  Provide completed entries of the form
-
-YEAR: 2021
-COPYRIGHT HOLDER: zecellomaster
-
-(separated by empty lines) as file LICENSE, and specify
-
-License: MIT + file LICENSE
-
-in file DESCRIPTION.
-
-************************************************************************
-
-Copyright (c) <YEAR>, <COPYRIGHT HOLDER>
+Copyright (c) 2021 zecellomaster
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

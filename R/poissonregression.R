@@ -9,19 +9,23 @@
 #' @param elos List; current Elo ratings of Teams A and B respectively. Team A
 #' is in the first index and has the higher rating
 #'
-#' @param home 2 item List of booleans; Whether or not either team is at home
+#' @param home 2 item vector of booleans; Whether or not either team is at home
 #'
-#' @param prev_matches List of Dataframe; contains previous matches, Elo ratings,
+#' @param prev_matches List of dataframes; contains previous matches, Elo ratings,
 #' and (if available) match weights of Teams A and B respectively.
-#' Dataframe columns: team_elo, opp_elo, team_score, opp_score, team_home, team_away,
+#' Dataframe columns: team_elo, opp_elo, team_score, opp_score, team_home, opp_home,
 #' weight
 #'
+#' @param type "nested" or "indep": The type of Poisson regression to be used,
+#' nested  or independent. If empty, the function will choose the best type
+#' depending on the circumstances.
 #'
-#' @return regressions, state, adjust_weight (if Team B # of matches < 25)
+#'
+#' @return state;regressions, adjust_weight (if Team B # of matches < 25)
 #'
 #' @export
 
-poissonregression <- function(elos, home, prev_matches){
+poissonregression <- function(elos, home, prev_matches, type= F){
   #Checks if Team A has the higher Elo
   if (elos[1] < elos[2]){
     stop("WARNING: Team A's Elo rating must be *greater than or equal to* Team B's.
@@ -49,14 +53,14 @@ poissonregression <- function(elos, home, prev_matches){
       if (prev_matches[[i]][j,"team_home"] == TRUE){
         prev_matches[[i]][j,"team_elo"] <- prev_matches[[i]][j,"team_elo"] + 100
 
-      } else if (prev_matches[[i]][j,"opp_elo"] == TRUE){
+      } else if (prev_matches[[i]][j,"opp_home"] == TRUE){
         prev_matches[[i]][j,"opp_elo"] <- prev_matches[[i]][j,"opp_elo"] + 100
 
       }
     }
   }
 
-  if (dim(prev_matches[[1]])[1] <= 14 && dim(prev_matches[[2]])[1] > 14){
+  if (dim(prev_matches[[1]])[1] <= 14 && dim(prev_matches[[2]])[1] > 14 && type != "nested"){
     #If Team A has little to no match data, but Team B does, then the Poisson
     #regression only uses Team B data for both lambda_a and lambda_b (nested)
 
@@ -71,7 +75,7 @@ poissonregression <- function(elos, home, prev_matches){
 
     return(list(state, lambda_a, b_reg))
 
-  }else if (dim(prev_matches[[2]])[1] <= 14) {
+  }else if (dim(prev_matches[[2]])[1] <= 14 || type == "indep") {
     #If Team B has little to no match data, regardless of whether or not Team A does
     #we switch to 2 independent regressions using Team A data
 
@@ -88,7 +92,7 @@ poissonregression <- function(elos, home, prev_matches){
 
     return(list(state, lambda_a, lambda_b))
 
-  }else if (dim(prev_matches[[1]])[1] < 25) {
+  }else if (dim(prev_matches[[1]])[1] < 25 && type != "nested") {
     #If Team A has insufficient match data, then its contribution to its
     #Poisson regression is weighted by the number of matches it has completed. Follows
     #standard nested procedure
@@ -111,7 +115,7 @@ poissonregression <- function(elos, home, prev_matches){
 
     return(list(state, lambda_a, b_reg))
 
-  }else if (dim(prev_matches[[2]])[1] < 25) {
+  }else if (dim(prev_matches[[2]])[1] < 25 && type != "nested") {
     #If Team B has no match data, we switch to 2 independent regressions
     #using Team A data, but also calculate the nested regression. We send the
     #weight as well
@@ -143,7 +147,7 @@ poissonregression <- function(elos, home, prev_matches){
 
     return(list(state, lambda_a, lambda_b, b_reg, adjust_weight*2))
 
-  } else{
+  } else {
     #This portion calculates the necessary coefficients
     #Poisson Regression of goals scored *for* Team A as a function of the opponent's Elo
     mu_a <- glm(formula = team_score ~ opp_elo ,family = poisson(link = "log"),
