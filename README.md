@@ -1,6 +1,6 @@
-# SoccerEloForecast
+# SoccerEloForecast ⚽ 📊
 
-`SoccerEloForecast` is a package that allows a user to anaylze previous matches and Elo ratings to fit Possion distributions onto them. This regression can also be used to simulate games and calculate the probabilities of match results.
+`SoccerEloForecast` is a package that allows a user to analyze previous matches and Elo ratings to fit Poisson distributions onto them. This regression can also be used to simulate games and calculate the probabilities of match results.
 
 ## Installation
 You can install this function from Github using devtools:
@@ -56,6 +56,6 @@ Dataframe columns: team_elo, opp_elo, team_score, opp_score, team_home, team_awa
 
 To better understand the purpose of this package check out these other repositories:
 
-[MLSEloForecast](https://github.com/zecellomaster/SoccerEloForecast): A group of R scripts meant to forcast the MLS Season.
+[MLSEloForecast](https://github.com/zecellomaster/MLSEloForecast): A group of R scripts meant to forcast the MLS Season.
 
 
